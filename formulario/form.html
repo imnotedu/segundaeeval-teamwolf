@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FitPlus - Entrenamiento Personalizado</title>
+    <link rel="stylesheet" href="style_form.css">
+</head>
+<body>
+    <section class="section" id="contacto">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contáctanos</h2>
+                <p>¿Tienes preguntas o quieres empezar tu transformación? Escríbenos.</p>
+            </div>
+            <div class="form-container">
+                <div class="form-box">
+                    <h3>Formulario de Contacto</h3>
+                    <form id="contactForm" action="/contact/add" method="POST">
+                        <div class="form-group">
+                            <label for="email">Correo electrónico</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Nombres</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="comment">Comentario</label>
+                            <textarea id="comment" name="comment" required></textarea>
+                        </div>
+                        <button type="submit" class="btn">Enviar Mensaje</button>
+                    </form>
+                </div>
+                
+                <div class="form-box">
+                    <h3>Formulario de Pago</h3>
+                    <form id="paymentForm" action="/payment/add" method="POST">
+                        <div class="form-group">
+                            <label for="service">Servicio</label>
+                            <select id="service" name="service" required>
+                                <option value="">Seleccione un servicio</option>
+                                <option value="personal">Entrenamiento Personal 1:1 - $50/sesión</option>
+                                <option value="online">Planificación Online - $120/mes</option>
+                                <option value="grupo">Entrenamiento en Grupo - $30/sesión</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="payment_email">Correo electrónico</label>
+                            <input type="email" id="payment_email" name="payment_email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="card_name">Nombre en la tarjeta</label>
+                            <input type="text" id="card_name" name="card_name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="card_number">Número de tarjeta</label>
+                            <input type="text" id="card_number" name="card_number" placeholder="1234 5678 9012 3456" required>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="exp_month">Mes de expiración</label>
+                                <select id="exp_month" name="exp_month" required>
+                                    <option value="">MM</option>
+                                    <option value="01">01</option>
+                                    <option value="02">02</option>
+                                    <option value="12">12</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="exp_year">Año de expiración</label>
+                                <select id="exp_year" name="exp_year" required>
+                                    <option value="">YYYY</option>
+                                    <option value="2023">2023</option>
+                                    <option value="2024">2024</option>
+                                    <option value="2030">2030</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="cvv">CVV</label>
+                                <input type="text" id="cvv" name="cvv" placeholder="123" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="amount">Monto</label>
+                                <input type="text" id="amount" name="amount" readonly>
+                            </div>
+                            <div class="form-group">
+                                <label for="currency">Moneda</label>
+                                <select id="currency" name="currency" required>
+                                    <option value="USD">USD</option>
+                                    <option value="EUR">EUR</option>
+                                    <option value="GBP">GBP</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <button type="submit" class="btn">Realizar Pago</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="admin-contacts" style="display: none;">
+        <div class="admin-container">
+            <h2 class="admin-title">Contactos Registrados</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Email</th>
+                        <th>Comentario</th>
+                        <th>IP</th>
+                        <th>Fecha</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Juan Pérez</td>
+                        <td>juan@example.com</td>
+                        <td>Quiero información sobre entrenamiento personal</td>
+                        <td>192.168.1.1</td>
+                        <td>2023-05-15 14:30</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+
+
+    <script>
+        document.getElementById('service').addEventListener('change', function() {
+            const service = this.value;
+            const amountField = document.getElementById('amount');
+            
+            switch(service) {
+                case 'personal':
+                    amountField.value = '50';
+                    break;
+                case 'online':
+                    amountField.value = '120';
+                    break;
+                case 'grupo':
+                    amountField.value = '30';
+                    break;
+                default:
+                    amountField.value = '';
+            }
+        });
+        
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            document.getElementById('paymentMessage').style.display = 'block';
+            setTimeout(() => {
+                this.reset();
+                document.getElementById('paymentMessage').style.display = 'none';
+            }, 3000);
+            
+            return false;
+        });
+    </script>
+
+<script src="validaciones.ts"></script>
+
+</body>
+</html>
